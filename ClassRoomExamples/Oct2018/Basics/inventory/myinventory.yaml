@@ -1,0 +1,12 @@
+[ip]
+
+172.31.46.78
+172.31.38.137
+127.0.0.1
+
+
+[hostname]
+
+ip-172-31-46-78.us-east-2.compute.internal
+ip-172-31-38-137.us-east-2.compute.internal
+localhost
