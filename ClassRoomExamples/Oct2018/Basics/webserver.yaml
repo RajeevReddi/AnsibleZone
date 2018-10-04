@@ -12,6 +12,18 @@
         state: present
    - name: creating the homepage
      file:
-      path: /var/www/html/index.html
+      path: /home/ansible/index.html
       state: file
-   
+   - name: stop apache2
+     apt:
+      name: apache2
+      state: stopped
+   - name: create index homepage
+     file:
+      src: /home/ansible/index.html
+      dest: /var/www/html/index.html
+
+   - name: start apache2
+     apt:
+      name: apache2
+      state: started   
