@@ -10,4 +10,8 @@
      apt:
         name: apache2
         state: present
+   - name: creating the homepage
+     file:
+      path: /var/www/html/index.html
+      state: file
    
