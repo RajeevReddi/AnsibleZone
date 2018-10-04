@@ -1,0 +1,17 @@
+---
+  - hosts: appserver
+    become: yes
+    tasks:
+      - name: cache update
+        apt:
+          update_cache: yes
+      - name: install tomcat
+        apt:
+          name: tomcat7
+          state: present
+      - name: stop service
+        service:
+          name: tomcat7
+          state: stopped
+      
+    
