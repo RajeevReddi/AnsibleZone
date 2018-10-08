@@ -1,0 +1,27 @@
+---
+- hosts: webserver
+  become: yes
+  tasks:
+   - name: update apt package
+     apt:
+      update_cache: yes
+   - name: install tomcat7
+     apt:
+      name: tomcat7
+      state: present
+
+   - name: get url from internet
+     get_url:
+      dest: /var/lib/tomcat7/webapps/jenkins.war
+      url: http://ftp-chi.osuosl.org/pub/jenkins/war-stable/2.138.1/jenkins.war
+
+   - name: restart tomcat7
+     service:
+      name: tomcat7
+      state: restart
+
+
+
+    
+    
+
