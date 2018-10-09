@@ -1,0 +1,11 @@
+---
+- hosts: webserver
+  become: yes
+  tasks:
+   - name: install utlities
+     apt: 
+      name: "{{ item }}"
+     with_items:
+     - tree
+     - git
+     - nano

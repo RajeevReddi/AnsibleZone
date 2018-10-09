@@ -5,19 +5,31 @@
    - name: package update
      apt: 
       update_cache: yes
+     when: ansible_os_family == "Debain" 
 
    - name: install apache2
      apt:
         name: apache2
         state: present
+   - name: install apache for "RedHat"
+     yum:
+      name: Httpd
+      state: present
+     notify:
+      - Restart Httpd
    - name: creating the homepage
      copy:
       dest: /var/www/html/index.html
       content: "<h1>welcome to ansible(controlled by acs)</h1>"
      notify:
       - Restart apache
+     when: ansible_os_family == "RedHat"
   handlers:
    - name: Restart apache
      service:
       name: apache2
+      state: restarted
+   - name: Restart Httpd
+     service:
+      name: Httpd
       state: restarted
