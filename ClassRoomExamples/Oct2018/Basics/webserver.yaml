@@ -14,6 +14,9 @@
      copy:
       dest: /var/www/html/index.html
       content: "<h1>welcome to ansible(controlled by acs)</h1>"
+     notify:
+      - Restart apache
+  handlers:
    - name: Restart apache
      service:
       name: apache2

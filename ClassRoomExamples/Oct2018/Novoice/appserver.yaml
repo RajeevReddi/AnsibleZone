@@ -14,7 +14,10 @@
      get_url:
       dest: /var/lib/tomcat7/webapps/jenkins.war
       url: http://ftp-chi.osuosl.org/pub/jenkins/war-stable/2.138.1/jenkins.war
-
+     notify:
+      - restart tomcat7
+  
+  handler:
    - name: restart tomcat7
      service:
       name: tomcat7
