@@ -1,0 +1,48 @@
+---
+- hosts: webserver
+  vars:
+    pack_name: tomcat7
+    set_state: present
+    max_mem: 512
+    perm_size: 256
+    tomcat_username: admin
+    tomcat_password: password
+    tomcat_roles: manager-gui,admin-gui
+    Additional_packages:
+      - tomcat7-docs
+      - tomcat7-admin
+      - tomcat7-examples
+  become: yes
+  tasks:
+   - name: update cache
+     apt:
+      update_cache: yes          
+   - name: install tomcat
+     apt:
+      name: "{{ pack_name }}"
+      state: present
+      notify:
+        restart tomcat
+   - name: change default settings
+     template:
+      src: tomcat7.j2
+      dest: /etc/default/tomcat7
+     notify:
+       restart tomcat
+   - name: create Additional packages
+     apt:
+      name: { item }
+      with_item: 
+        {{ Additional_packages }}
+   - name: Configure Tomcat interface
+     template:
+      src: tomcat-users.xml.j2
+      dest:   /etc/tomcat7/tomcat-users.xml
+     notify:
+      restart tomcat   
+  handlers:
+    - name: restart tomcat
+      service:
+        name: "{{ pack_name }}"
+        state: restarted
+        when: set_state == present
